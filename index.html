@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Family World Cup Bracket 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Archivo:ital,wght@0,500;0,700;0,800;0,900;1,800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0a0e27;
+    --card:rgba(255,255,255,.055);
+    --card-border:rgba(255,255,255,.11);
+    --text:#f4f6ff;
+    --muted:#9aa3c7;
+    --green:#2fd97b;
+    --red:#ff5d6e;
+    --gold:#ffd166;
+    --accent1:#ff2d6c;
+    --accent2:#7a5cff;
+    --accent3:#00d4ff;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+  html,body{background:var(--bg)}
+  body{
+    font-family:'Inter',system-ui,sans-serif;color:var(--text);
+    min-height:100vh;overflow-x:hidden;
+    background:
+      radial-gradient(900px 500px at 85% -10%, rgba(122,92,255,.28), transparent 60%),
+      radial-gradient(700px 450px at -10% 15%, rgba(255,45,108,.22), transparent 60%),
+      radial-gradient(800px 500px at 50% 110%, rgba(0,212,255,.14), transparent 60%),
+      var(--bg);
+  }
+  .wrap{max-width:520px;margin:0 auto;padding:20px 16px 48px}
+
+  /* ---------- header ---------- */
+  header{text-align:center;padding:14px 0 6px}
+  .cup{font-size:44px;line-height:1;filter:drop-shadow(0 4px 14px rgba(255,209,102,.45))}
+  h1{
+    font-family:'Archivo',sans-serif;font-weight:900;font-style:italic;
+    font-size:30px;letter-spacing:-.5px;line-height:1.05;margin-top:8px;text-transform:uppercase;
+    background:linear-gradient(100deg,var(--accent1),var(--accent2) 55%,var(--accent3));
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+  }
+  .sub{color:var(--muted);font-size:13px;margin-top:6px;font-weight:500}
+  .updated{color:var(--muted);font-size:11px;margin-top:4px;opacity:.8}
+
+  /* ---------- today ribbon ---------- */
+  .ribbon{
+    margin:18px 0 6px;border-radius:14px;padding:12px 14px;
+    background:linear-gradient(100deg,rgba(255,45,108,.16),rgba(122,92,255,.16));
+    border:1px solid rgba(255,255,255,.14);
+  }
+  .ribbon .rt{font-family:'Archivo',sans-serif;font-weight:800;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--gold)}
+  .ribbon .rg{font-size:14px;font-weight:600;margin-top:5px;line-height:1.5}
+
+  /* ---------- section titles ---------- */
+  .stitle{
+    font-family:'Archivo',sans-serif;font-weight:800;font-size:12px;letter-spacing:.16em;
+    text-transform:uppercase;color:var(--muted);margin:26px 2px 10px;display:flex;align-items:center;gap:8px;
+  }
+  .stitle::after{content:"";flex:1;height:1px;background:rgba(255,255,255,.1)}
+
+  /* ---------- leaderboard ---------- */
+  .lb{display:flex;flex-direction:column;gap:10px}
+  .row{
+    display:flex;align-items:center;gap:12px;padding:14px;border-radius:16px;
+    background:var(--card);border:1px solid var(--card-border);
+    cursor:pointer;transition:transform .12s ease, background .12s ease;
+    position:relative;overflow:hidden;
+  }
+  .row:active{transform:scale(.98)}
+  .row.first{
+    background:linear-gradient(100deg,rgba(255,209,102,.14),rgba(255,153,51,.07) 60%,var(--card));
+    border-color:rgba(255,209,102,.45);
+    box-shadow:0 0 24px rgba(255,209,102,.12);
+  }
+  .rank{
+    font-family:'Archivo',sans-serif;font-weight:900;font-style:italic;font-size:20px;width:30px;text-align:center;color:var(--muted);flex-shrink:0;
+  }
+  .row.first .rank{color:var(--gold)}
+  .avatar{
+    width:42px;height:42px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;
+    font-family:'Archivo',sans-serif;font-weight:800;font-size:16px;color:#fff;
+    box-shadow:inset 0 -2px 6px rgba(0,0,0,.25);
+  }
+  .who{flex:1;min-width:0}
+  .who .nm{font-weight:700;font-size:16px;display:flex;align-items:center;gap:6px}
+  .who .champ{font-size:12px;color:var(--muted);margin-top:3px;display:flex;align-items:center;gap:5px}
+  .who .champ .dead{text-decoration:line-through;opacity:.6}
+  .who .champ .deadtag{font-size:10px;color:var(--red);font-weight:700;text-transform:uppercase;letter-spacing:.05em}
+  .ptbox{text-align:right;flex-shrink:0}
+  .pts{font-family:'Archivo',sans-serif;font-weight:900;font-size:24px;line-height:1}
+  .row.first .pts{color:var(--gold)}
+  .max{font-size:10.5px;color:var(--muted);margin-top:3px;white-space:nowrap}
+  .chev{color:var(--muted);font-size:18px;flex-shrink:0;margin-left:-2px}
+
+  /* ---------- schedule ---------- */
+  .sched{display:flex;flex-direction:column;gap:8px}
+  .game{
+    display:flex;align-items:center;gap:10px;padding:11px 13px;border-radius:13px;
+    background:var(--card);border:1px solid var(--card-border);font-size:14px;
+  }
+  .game .d{font-size:11px;color:var(--muted);width:46px;flex-shrink:0;line-height:1.35}
+  .game .m{flex:1;font-weight:600}
+  .game .m .beat{color:var(--muted);font-weight:500}
+  .game .badge{font-size:10px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;padding:4px 8px;border-radius:99px;flex-shrink:0}
+  .b-final{background:rgba(47,217,123,.15);color:var(--green)}
+  .b-today{background:rgba(255,209,102,.16);color:var(--gold);animation:pulse 1.6s infinite}
+  .b-soon{background:rgba(255,255,255,.08);color:var(--muted)}
+  @keyframes pulse{0%,100%{opacity:1}50%{opacity:.55}}
+
+  /* ---------- how it works ---------- */
+  .how{
+    margin-top:26px;padding:16px;border-radius:16px;background:var(--card);
+    border:1px solid var(--card-border);font-size:13.5px;color:var(--muted);line-height:1.65;
+  }
+  .how b{color:var(--text)}
+  .ptsrow{display:flex;gap:8px;margin-top:10px;flex-wrap:wrap}
+  .ptchip{
+    flex:1;min-width:70px;text-align:center;padding:9px 4px;border-radius:11px;
+    background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1)
+  }
+  .ptchip .v{font-family:'Archivo',sans-serif;font-weight:900;font-size:18px;color:var(--text)}
+  .ptchip .l{font-size:10px;text-transform:uppercase;letter-spacing:.06em;margin-top:2px}
+
+  /* ---------- detail panel ---------- */
+  .panel{
+    position:fixed;inset:0;background:var(--bg);z-index:50;overflow-y:auto;
+    transform:translateX(100%);transition:transform .28s cubic-bezier(.32,.72,.22,1);
+    background:
+      radial-gradient(800px 450px at 85% -10%, rgba(122,92,255,.25), transparent 60%),
+      radial-gradient(600px 400px at -10% 20%, rgba(255,45,108,.18), transparent 60%),
+      var(--bg);
+  }
+  .panel.open{transform:translateX(0)}
+  .pwrap{max-width:520px;margin:0 auto;padding:16px 16px 48px}
+  .back{
+    display:inline-flex;align-items:center;gap:6px;color:var(--muted);font-weight:600;font-size:14px;
+    background:var(--card);border:1px solid var(--card-border);border-radius:99px;padding:8px 16px;cursor:pointer;
+  }
+  .phead{display:flex;align-items:center;gap:14px;margin:18px 0 4px}
+  .phead .avatar{width:56px;height:56px;font-size:22px}
+  .phead h2{font-family:'Archivo',sans-serif;font-weight:900;font-style:italic;font-size:26px;text-transform:uppercase}
+  .phead .psub{color:var(--muted);font-size:13px;margin-top:2px}
+  .statgrid{display:flex;gap:8px;margin:16px 0 4px}
+  .stat{
+    flex:1;text-align:center;padding:12px 6px;border-radius:14px;
+    background:var(--card);border:1px solid var(--card-border);
+  }
+  .stat .v{font-family:'Archivo',sans-serif;font-weight:900;font-size:22px}
+  .stat .l{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.07em;margin-top:3px}
+  .v.g{color:var(--green)} .v.r{color:var(--red)} .v.y{color:var(--gold)}
+
+  .pick{
+    display:flex;align-items:center;gap:11px;padding:12px 13px;border-radius:13px;margin-bottom:8px;
+    background:var(--card);border:1px solid var(--card-border);
+  }
+  .pick.ok{border-color:rgba(47,217,123,.4);background:rgba(47,217,123,.07)}
+  .pick.no{border-color:rgba(255,93,110,.35);background:rgba(255,93,110,.06)}
+  .pick .ico{
+    width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;
+    font-size:15px;font-weight:900;flex-shrink:0;
+  }
+  .ico.ok{background:rgba(47,217,123,.18);color:var(--green)}
+  .ico.no{background:rgba(255,93,110,.16);color:var(--red)}
+  .ico.tbd{background:rgba(255,255,255,.08);color:var(--muted);font-size:13px}
+  .pick .info{flex:1;min-width:0}
+  .pick .mu{font-size:11.5px;color:var(--muted);margin-bottom:3px}
+  .pick .pk{font-weight:700;font-size:15px}
+  .pick .pk .small{font-weight:500;font-size:12px;color:var(--muted)}
+  .pick .res{text-align:right;flex-shrink:0}
+  .pick .res .rp{font-family:'Archivo',sans-serif;font-weight:900;font-size:16px}
+  .pick .res .rl{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;margin-top:1px}
+  .rp.g{color:var(--green)} .rp.r{color:var(--red)} .rp.m{color:var(--muted)}
+  footer{text-align:center;color:var(--muted);font-size:11px;margin-top:30px;opacity:.7;line-height:1.6}
+</style>
+</head>
+<body>
+<div class="wrap" id="home">
+  <header>
+    <div class="cup">🏆</div>
+    <h1>Family World Cup<br>Bracket 2026</h1>
+    <div class="sub">Road to the Final &middot; MetLife Stadium &middot; July 19</div>
+    <div class="updated" id="updated"></div>
+  </header>
+
+  <div class="ribbon" id="ribbon" style="display:none">
+    <div class="rt" id="ribbonTitle"></div>
+    <div class="rg" id="ribbonGames"></div>
+  </div>
+
+  <div class="stitle">Leaderboard</div>
+  <div class="lb" id="leaderboard"></div>
+
+  <div class="stitle">Games &amp; Results</div>
+  <div class="sched" id="schedule"></div>
+
+  <div class="how">
+    <b>How it works:</b> everyone picked a winner for every game before the Round of 16.
+    Correct picks earn points, and games are worth more the deeper we go. If your team gets
+    knocked out, any later picks of that team are dead. Tap a name to see their full bracket.
+    <div class="ptsrow">
+      <div class="ptchip"><div class="v">1</div><div class="l">Rd of 16</div></div>
+      <div class="ptchip"><div class="v">2</div><div class="l">Quarters</div></div>
+      <div class="ptchip"><div class="v">4</div><div class="l">Semis</div></div>
+      <div class="ptchip"><div class="v">8</div><div class="l">Final</div></div>
+    </div>
+  </div>
+
+  <footer>Max score: 32 points &middot; May the best bracket win 🎉<br>An unofficial family game for the FIFA World Cup 26&trade;</footer>
+</div>
+
+<div class="panel" id="panel"><div class="pwrap" id="panelContent"></div></div>
+
+<script>
+/* ================= EDIT RESULTS HERE =================
+   When a game finishes, set winner:"TeamName" and score:"2-1"
+   (add "(pens)" to score for shootouts). Everything else
+   recalculates automatically.                            */
+const LAST_UPDATED = "July 6, 2026";
+
+const FLAGS = {
+  "Morocco":"🇲🇦","Canada":"🇨🇦","France":"🇫🇷","Paraguay":"🇵🇾","USA":"🇺🇸","Belgium":"🇧🇪",
+  "Portugal":"🇵🇹","Spain":"🇪🇸","Brazil":"🇧🇷","Norway":"🇳🇴","Mexico":"🇲🇽","England":"🏴󠁧󠁢󠁥󠁮󠁧󠁿",
+  "Colombia":"🇨🇴","Switzerland":"🇨🇭","Egypt":"🇪🇬","Argentina":"🇦🇷"
+};
+
+const GAMES = [
+  // Round of 16
+  {id:"R1", round:"R16", slot:0, a:"Morocco",  b:"Canada",      date:"2026-07-04", dlabel:"Jul 4",  winner:"Morocco", score:"3-0"},
+  {id:"R2", round:"R16", slot:1, a:"France",   b:"Paraguay",    date:"2026-07-04", dlabel:"Jul 4",  winner:"France",  score:"1-0"},
+  {id:"R3", round:"R16", slot:2, a:"USA",      b:"Belgium",     date:"2026-07-06", dlabel:"Jul 6",  winner:null, score:null},
+  {id:"R4", round:"R16", slot:3, a:"Portugal", b:"Spain",       date:"2026-07-06", dlabel:"Jul 6",  winner:null, score:null},
+  {id:"R5", round:"R16", slot:4, a:"Brazil",   b:"Norway",      date:"2026-07-05", dlabel:"Jul 5",  winner:"Norway",  score:"1-2"},
+  {id:"R6", round:"R16", slot:5, a:"Mexico",   b:"England",     date:"2026-07-05", dlabel:"Jul 5",  winner:"England", score:"2-3"},
+  {id:"R7", round:"R16", slot:6, a:"Colombia", b:"Switzerland", date:"2026-07-07", dlabel:"Jul 7",  winner:null, score:null},
+  {id:"R8", round:"R16", slot:7, a:"Egypt",    b:"Argentina",   date:"2026-07-07", dlabel:"Jul 7",  winner:null, score:null},
+  // Quarterfinals (teams fill in from feeder game winners)
+  {id:"Q1", round:"QF", slot:0, feeders:["R1","R2"], date:"2026-07-09", dlabel:"Jul 9",  winner:null, score:null},
+  {id:"Q2", round:"QF", slot:1, feeders:["R3","R4"], date:"2026-07-10", dlabel:"Jul 10", winner:null, score:null},
+  {id:"Q3", round:"QF", slot:2, feeders:["R5","R6"], date:"2026-07-11", dlabel:"Jul 11", winner:null, score:null},
+  {id:"Q4", round:"QF", slot:3, feeders:["R7","R8"], date:"2026-07-11", dlabel:"Jul 11", winner:null, score:null},
+  // Semifinals
+  {id:"S1", round:"SF", slot:0, feeders:["Q1","Q2"], date:"2026-07-14", dlabel:"Jul 14", winner:null, score:null},
+  {id:"S2", round:"SF", slot:1, feeders:["Q3","Q4"], date:"2026-07-15", dlabel:"Jul 15", winner:null, score:null},
+  // Final
+  {id:"F1", round:"F", slot:0, feeders:["S1","S2"], date:"2026-07-19", dlabel:"Jul 19", winner:null, score:null}
+];
+/* ================ END OF RESULTS BLOCK ================ */
+
+const ROUNDS = {
+  R16:{name:"Round of 16", pts:1},
+  QF: {name:"Quarterfinals", pts:2},
+  SF: {name:"Semifinals", pts:4},
+  F:  {name:"The Final", pts:8}
+};
+
+const PLAYERS = [
+  {name:"Dad",       color:"linear-gradient(135deg,#f97316,#dc2626)",
+   R16:["Morocco","France","USA","Portugal","Brazil","Mexico","Colombia","Egypt"],
+   QF:["France","Portugal","Mexico","Egypt"], SF:["France","Egypt"], F:["Egypt"]},
+  {name:"Kerry",     color:"linear-gradient(135deg,#ec4899,#8b5cf6)",
+   R16:["Canada","Paraguay","USA","Spain","Norway","Mexico","Colombia","Argentina"],
+   QF:["Paraguay","Spain","Norway","Argentina"], SF:["Spain","Argentina"], F:["Spain"]},
+  {name:"Catherine", color:"linear-gradient(135deg,#06b6d4,#3b82f6)",
+   R16:["Morocco","France","USA","Spain","Norway","Mexico","Colombia","Argentina"],
+   QF:["Morocco","Spain","Mexico","Argentina"], SF:["Spain","Argentina"], F:["Spain"]},
+  {name:"Kyle",      color:"linear-gradient(135deg,#22c55e,#0d9488)",
+   R16:["Morocco","France","USA","Portugal","Brazil","England","Colombia","Argentina"],
+   QF:["France","USA","Brazil","Argentina"], SF:["France","Brazil"], F:["Brazil"]},
+  {name:"Dan",       color:"linear-gradient(135deg,#8b5cf6,#6366f1)",
+   R16:["Morocco","France","Belgium","Spain","Norway","England","Switzerland","Argentina"],
+   QF:["France","Spain","England","Argentina"], SF:["France","England"], F:["France"]},
+  {name:"Mom",       color:"linear-gradient(135deg,#eab308,#f97316)",
+   R16:["Morocco","France","USA","Spain","Norway","England","Colombia","Argentina"],
+   QF:["France","USA","Norway","Argentina"], SF:["USA","Argentina"], F:["Argentina"]}
+];
+
+/* ---------- engine ---------- */
+const byId = {}; GAMES.forEach(g=>byId[g.id]=g);
+
+function teamsOf(g){
+  if(g.a) return [g.a, g.b];
+  return g.feeders.map(f=>byId[f].winner); // null if not decided
+}
+function eliminated(){
+  const out = new Set();
+  GAMES.forEach(g=>{
+    if(!g.winner) return;
+    teamsOf(g).forEach(t=>{ if(t && t!==g.winner) out.add(t); });
+  });
+  return out;
+}
+const OUT = eliminated();
+const fl = t => FLAGS[t]||"";
+const ft = t => fl(t)+" "+t;
+
+function evalPick(pick, game){
+  const pts = ROUNDS[game.round].pts;
+  if(game.winner) return pick===game.winner
+    ? {state:"ok", earned:pts, possible:pts}
+    : {state:"no", earned:0, possible:0};
+  if(OUT.has(pick)) return {state:"dead", earned:0, possible:0};
+  return {state:"tbd", earned:0, possible:pts};
+}
+
+function score(p){
+  let earned=0, max=0, right=0, wrong=0;
+  const details=[];
+  ["R16","QF","SF","F"].forEach(rk=>{
+    GAMES.filter(g=>g.round===rk).forEach(g=>{
+      const pick = p[rk][g.slot];
+      const ev = evalPick(pick, g);
+      earned += ev.earned; max += ev.state==="ok" ? ev.possible : ev.possible;
+      if(ev.state==="ok") right++;
+      if(ev.state==="no"||ev.state==="dead") wrong++;
+      details.push({game:g, pick, ev});
+    });
+  });
+  return {earned, max: earned + details.filter(d=>d.ev.state==="tbd").reduce((s,d)=>s+ROUNDS[d.game.round].pts,0), right, wrong, details};
+}
+
+const scored = PLAYERS.map(p=>({p, s:score(p)}))
+  .sort((x,y)=> y.s.earned - x.s.earned || y.s.max - x.s.max);
+
+/* ---------- render leaderboard ---------- */
+const lb = document.getElementById("leaderboard");
+let lastPts=null, lastRank=0;
+scored.forEach((e,i)=>{
+  const rank = (e.s.earned===lastPts) ? lastRank : i+1;
+  lastPts=e.s.earned; lastRank=rank;
+  const champ = e.p.F[0];
+  const champDead = OUT.has(champ);
+  const row = document.createElement("div");
+  row.className = "row"+(rank===1?" first":"");
+  row.onclick = ()=>openPanel(e);
+  row.innerHTML = `
+    <div class="rank">${rank===1?"👑":rank}</div>
+    <div class="avatar" style="background:${e.p.color}">${e.p.name[0]}</div>
+    <div class="who">
+      <div class="nm">${e.p.name}</div>
+      <div class="champ">
+        <span class="${champDead?'dead':''}">🏆 ${ft(champ)}</span>
+        ${champDead?'<span class="deadtag">out!</span>':''}
+      </div>
+    </div>
+    <div class="ptbox">
+      <div class="pts">${e.s.earned}<span style="font-size:12px;color:var(--muted)"> pts</span></div>
+      <div class="max">max ${e.s.max}</div>
+    </div>
+    <div class="chev">›</div>`;
+  lb.appendChild(row);
+});
+
+/* ---------- schedule ---------- */
+function todayISO(){
+  const d = new Date();
+  return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0");
+}
+const TODAY = todayISO();
+
+function matchLabel(g){
+  const [a,b] = teamsOf(g);
+  const A = a?ft(a):"Winner "+byId[g.feeders[0]].id.replace(/^R/,"R16 #").replace(/^Q/,"QF #").replace(/^S/,"SF #");
+  const B = b?ft(b):"TBD";
+  if(!a||!b){
+    const fa = g.feeders?byId[g.feeders[0]]:null, fb = g.feeders?byId[g.feeders[1]]:null;
+    const name = x => { const [t1,t2]=teamsOf(x); return x.winner?ft(x.winner):(t1&&t2?fl(t1)+"/"+fl(t2):"TBD"); };
+    return (fa?name(fa):A)+" vs "+(fb?name(fb):B);
+  }
+  return A+" vs "+B;
+}
+function gameHTML(g){
+  let badge, txt;
+  if(g.winner){
+    badge = '<span class="badge b-final">FT '+(g.score||"")+'</span>';
+    const [a,b]=teamsOf(g);
+    const loser = g.winner===a?b:a;
+    txt = "<b>"+ft(g.winner)+"</b> <span class='beat'>beat "+ft(loser)+"</span>";
+  } else {
+    badge = g.date===TODAY ? '<span class="badge b-today">Today</span>' : '<span class="badge b-soon">'+ROUNDS[g.round].pts+' pt'+(ROUNDS[g.round].pts>1?'s':'')+'</span>';
+    txt = matchLabel(g);
+  }
+  return `<div class="game"><div class="d">${g.dlabel}<br><span style="opacity:.75">${ROUNDS[g.round].name.slice(0,6)}</span></div><div class="m">${txt}</div>${badge}</div>`;
+}
+const schedEl = document.getElementById("schedule");
+["R16","QF","SF","F"].forEach(rk=>{
+  const t = document.createElement("div");
+  t.className="stitle"; t.style.marginTop="14px";
+  t.textContent = ROUNDS[rk].name+" · "+ROUNDS[rk].pts+" pt"+(ROUNDS[rk].pts>1?"s":"")+" each";
+  schedEl.appendChild(t);
+  GAMES.filter(g=>g.round===rk).sort((a,b)=>a.date.localeCompare(b.date)).forEach(g=>{
+    const d=document.createElement("div"); d.innerHTML=gameHTML(g); schedEl.appendChild(d.firstChild);
+  });
+});
+
+/* ---------- today ribbon ---------- */
+(function(){
+  const today = GAMES.filter(g=>!g.winner && g.date===TODAY);
+  if(!today.length) return;
+  document.getElementById("ribbon").style.display="block";
+  document.getElementById("ribbonTitle").textContent = "⚡ Today's game"+(today.length>1?"s":"");
+  document.getElementById("ribbonGames").innerHTML = today.map(g=>matchLabel(g)+" <span style='color:var(--muted)'>("+ROUNDS[g.round].pts+" pt"+(ROUNDS[g.round].pts>1?"s":"")+")</span>").join("<br>");
+})();
+
+document.getElementById("updated").textContent = "Updated "+LAST_UPDATED;
+
+/* ---------- detail panel ---------- */
+const panel = document.getElementById("panel");
+const pc = document.getElementById("panelContent");
+
+function pickRow(d){
+  const g=d.game, ev=d.ev, pts=ROUNDS[g.round].pts;
+  const cls = ev.state==="ok"?"ok":(ev.state==="no"||ev.state==="dead")?"no":"";
+  const ico = ev.state==="ok" ? '<div class="ico ok">✓</div>'
+            : ev.state==="no" ? '<div class="ico no">✗</div>'
+            : ev.state==="dead" ? '<div class="ico no">✗</div>'
+            : '<div class="ico tbd">⏳</div>';
+  const res = ev.state==="ok" ? '<div class="rp g">+'+pts+'</div><div class="rl">points</div>'
+            : ev.state==="no" ? '<div class="rp r">0</div><div class="rl">'+ft(g.winner)+' won</div>'
+            : ev.state==="dead" ? '<div class="rp r">0</div><div class="rl">team is out</div>'
+            : '<div class="rp m">'+pts+'?</div><div class="rl">'+g.dlabel+'</div>';
+  return `<div class="pick ${cls}">${ico}
+    <div class="info"><div class="mu">${matchLabel(g)}</div>
+    <div class="pk">Picked ${ft(d.pick)}</div></div>
+    <div class="res">${res}</div></div>`;
+}
+
+function openPanel(e){
+  const {p,s} = e;
+  const rank = scored.findIndex(x=>x.p.name===p.name)+1;
+  let html = `<div class="back" onclick="history.back()">‹ Leaderboard</div>
+    <div class="phead">
+      <div class="avatar" style="background:${p.color}">${p.name[0]}</div>
+      <div><h2>${p.name}'s Bracket</h2>
+      <div class="psub">🏆 Champion pick: ${ft(p.F[0])}${OUT.has(p.F[0])?" (eliminated 😬)":""}</div></div>
+    </div>
+    <div class="statgrid">
+      <div class="stat"><div class="v y">${s.earned}</div><div class="l">Points</div></div>
+      <div class="stat"><div class="v g">${s.right}</div><div class="l">Correct</div></div>
+      <div class="stat"><div class="v r">${s.wrong}</div><div class="l">Missed</div></div>
+      <div class="stat"><div class="v">${s.max}</div><div class="l">Max poss.</div></div>
+    </div>`;
+  ["R16","QF","SF","F"].forEach(rk=>{
+    html += `<div class="stitle">${ROUNDS[rk].name} · ${ROUNDS[rk].pts} pt${ROUNDS[rk].pts>1?"s":""} each</div>`;
+    s.details.filter(d=>d.game.round===rk).forEach(d=>{ html += pickRow(d); });
+  });
+  pc.innerHTML = html;
+  panel.classList.add("open");
+  panel.scrollTop = 0;
+  history.pushState({panel:true},"");
+}
+function closePanel(){ panel.classList.remove("open"); }
+window.addEventListener("popstate",()=>closePanel());
+</script>
+</body>
+</html>
