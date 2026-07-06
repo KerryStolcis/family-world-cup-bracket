@@ -346,7 +346,7 @@ scored.forEach((e,i)=>{
       </div>
     </div>
     <div class="ptbox">
-      <div class="pts">${e.s.earned}<span style="font-size:12px;color:var(--muted)"> pts</span></div>
+      <div class="pts">${e.s.earned}<span style="font-size:12px;color:var(--muted)"> ${e.s.earned===1?"pt":"pts"}</span></div>
       <div class="max">max ${e.s.max}</div>
     </div>
     <div class="chev">›</div>`;
@@ -382,7 +382,8 @@ function gameHTML(g){
     badge = g.date===TODAY ? '<span class="badge b-today">Today</span>' : '<span class="badge b-soon">'+ROUNDS[g.round].pts+' pt'+(ROUNDS[g.round].pts>1?'s':'')+'</span>';
     txt = matchLabel(g);
   }
-  return `<div class="game"><div class="d">${g.dlabel}<br><span style="opacity:.75">${ROUNDS[g.round].name.slice(0,6)}</span></div><div class="m">${txt}</div>${badge}</div>`;
+  const SHORT = {R16:"R16", QF:"QF", SF:"Semi", F:"Final"};
+  return `<div class="game"><div class="d">${g.dlabel}<br><span style="opacity:.75">${SHORT[g.round]}</span></div><div class="m">${txt}</div>${badge}</div>`;
 }
 const schedEl = document.getElementById("schedule");
 ["R16","QF","SF","F"].forEach(rk=>{
